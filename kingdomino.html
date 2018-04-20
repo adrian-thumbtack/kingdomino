@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Kingdomino</title>
+	<style>
+		#playerOne {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		#playerTwo {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+		}
+		#tiles {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	</style>
+</head>
+<body>
+	<canvas id="playerOne" width=360 height=360 class="player"></canvas>
+	<canvas id="tiles" width=80 height=200></canvas>
+	<canvas id="playerTwo" width=360 height=360 class="player"></canvas>
+	<script>
+		ctx = [];
+		for(i=0; i<document.getElementsByClassName("player").length; i++){
+			ctx.push(document.getElementsByClassName("player")[i].getContext("2d"));
+		}
+		tileCtx = document.getElementById("tiles").getContext("2d");
+
+		allTiles = [];
+		shuffled = [];
+
+		function shuffleTiles(){
+			numbers = [];
+			for (i=0; i<allTiles.length; i++){
+				numbers[i] = i;
+			}
+			for (i=0; i<allTiles.length; i++){
+				r = Math.floor(Math.random()*numbers.length);
+				shuffled[i] = allTiles[r];
+				numbers.splice(r, 1);
+			}
+		}
+
+		shuffleTiles();
+		for (i=0; i<ctx.length; i++){
+			ctx[i].fillStyle = "purple";
+			ctx[i].fillRect(160, 160, 40, 40);
+			for (j=0; j<10; j++){
+				ctx[i].beginPath();
+				ctx[i].moveTo(0, 40*j);
+				ctx[i].lineTo(360, 40*j);
+				ctx[i].stroke();
+				ctx[i].beginPath();
+				ctx[i].moveTo(40*j,0);
+				ctx[i].lineTo(40*j, 360);
+				ctx[i].stroke();
+			}
+		}
+
+		function newTiles(){
+			colors = ["gold", "darkGreen", "dodgerBlue", "yellowGreen", "tan", "black"];
+			for (i=0; i<4; i++){
+				for (j=0; j<2; j++){
+					tileCtx.fillStyle = colors[shuffled[0][j]];
+					tileCtx.fillRect(40*j, 50*i, 40, 40);
+				}
+				
+			}
+		}
+	</script>
+</body>
+</html>

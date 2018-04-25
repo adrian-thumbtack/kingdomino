@@ -376,7 +376,8 @@
 		function placePiece(wow){
 			wow = wow.split(" ");
 			x = parseInt(wow[0], 10), y = parseInt(wow[1], 10), z = parseInt(wow[2], 10);
-			if (z === turn){
+			if (!hasClaim){document.getElementById("text").textContent = "Claim a new tile to finish your turn."}
+			else if (z === turn){
 				var type = [allTiles[current[piece]-1][0][0], allTiles[current[piece]-1][1][0]];
 				if (!rot[1]){
 					type.reverse();

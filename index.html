@@ -443,7 +443,7 @@
 				if (pos[0][0] <= ~~(q/2)-1){
 					for (i=pos[0][0]+(q+1)/2; i<q; i++){
 						for (j=0; j<boards[turn][i].length; j++){
-							if (boards[turn][j][i] < 0){break;}
+							if (boards[turn][j][i][0] < 0){break;}
 							else {boards[turn][j][i] = [-1,-1];}
 						}
 					}
@@ -451,7 +451,7 @@
 				else if (pos[0][1] >= ~~(q/2)+1){
 					for (i=0; i<=pos[0][1]-(q+1)/2; i++){
 						for (j=0; j<boards[turn][i].length; j++){
-							if (boards[turn][j][i] < 0){break;}
+							if (boards[turn][j][i][0] < 0){break;}
 							else {boards[turn][j][i] = [-1,-1];}
 						}
 					}
@@ -460,16 +460,17 @@
 				if (pos[1][0] <= ~~(q/2)-1){
 					for (i=pos[1][0]+(q+1)/2; i<q; i++){
 						for (j=0; j<boards[turn][i].length; j++){
-							if (boards[turn][i][j] < 0){break;}
+							if (boards[turn][i][j][0] < 0){break;}
 							else {boards[turn][i][j] = [-1,-1];}
 						}
 					}
 				}
 				else if (pos[1][1] >= ~~(q/2)+1){
 					for (i=0; i<q; i++){
-						for (j=0; j<=pos[0][1]-(q+1)/2; j++){
-							if (boards[turn][i][j] < 0){break;}
-							else {boards[turn][i][j] = [-1,-1];}
+						console.log(pos[1][1]-(q+1)/2);
+						for (j=0; j<=pos[1][1]-(q+1)/2; j++){
+							if (boards[turn][j][i][0] < 0){break;}
+							else {boards[turn][j][i] = [-1,-1];}
 						}
 					}
 				}
@@ -493,7 +494,6 @@
 			}
 
 			if (clear.length > 1){
-				console.log("broke here");
 				for (m=0; m<clear.length-1; m++){
 					if (clear[m] != clear[m+1]){
 						plTiles[turn][clear[i+1]][0] = 0;
@@ -512,16 +512,12 @@
 				clear = [clear[0]];
 			}
 
-			console.log("Length is " + clear.length);
-
 			if (clear.length === 0){
-				console.log("jk here");
 				boards[turn][y][x].push(region[turn]);
 				plTiles[turn].push([boards[turn][y][x][1], 1]);
 				region[turn]++;
 			}
 			else {
-				console.log("or perhaps here");
 				boards[turn][y][x].push(clear[0]);
 				plTiles[turn][clear[0]][1]++;
 				plTiles[turn][clear[0]][0] += boards[turn][y][x][1];
@@ -529,10 +525,7 @@
 
 			plSums[turn] = 0;
 			for (m=0; m<plTiles[turn].length; m++){
-				console.log(plTiles[turn][m][0]);
-				console.log(plTiles[turn][m][1]);
-				plSums[turn] += (plTiles[turn][m][0]*plTiles[turn][m][1]);
-				console.log("after: " + plSums[turn]);
+				plSums[turn] += (plTiles[turn][m][0]*plTiles[turn][m][1]);;
 			}
 			document.getElementsByClassName("score")[turn].textContent = plSums[turn].toString();
 		} 

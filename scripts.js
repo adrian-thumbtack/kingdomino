@@ -240,7 +240,8 @@ function advance(){
 }
 
 function rotate(c){
-	if (c === turn){
+	if (!hasClaim){}
+	else if (c === turn){
 		moreCtx[turn].clearRect(0, 0, w*2, w*2);
 		if (rot[0] && rot[1]){
 			rot[0] = false;
